@@ -8,6 +8,7 @@ mine = By.XPATH, '//*[contains(@text, "我的")]'  # 我的
 
 # 我的页面
 login = By.XPATH, '//*[contains(@text, "登录")]'  # 登录/注册
+username = By.ID, 'com.bjcsxq.chat.carfriend:id/mine_username_tv'  # 用户昵称
 
 # 登录页面
 user = By.ID, 'com.bjcsxq.chat.carfriend:id/login_phone_et'  # 账号

@@ -22,3 +22,6 @@ class TestLogin(object):
         self.page_factory.index_page().click_mine()  # 点击我的
         self.page_factory.mine_page().click_login()  # 点击登录/注册
         self.page_factory.login_page().login_func('13157523435', 'lm123456')  # 登录
+        # 断言
+        username_text = self.page_factory.mine_page().get_username_text()
+        assert '3435' in username_text
