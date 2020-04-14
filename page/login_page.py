@@ -29,4 +29,9 @@ class LoginPage(BasePage):
         self.input_user(name)  # 输入用户名
         self.input_pwd(password)  # 输入密码
         self.click_login_btn()  # 点击登录按钮
-        self.click_confirm_btn()  # 点击确认按钮
+        # self.click_confirm_btn()  # 点击确认按钮
+
+    def get_login_toast(self, text):
+        """获取登录页面toast信息方法"""
+        # 调用基类获取 toast方法时, 需要添加返回值, 否则当前方法被调用时, 调用处获取不到元素的文本信息
+        return self.get_toast_func(text)
