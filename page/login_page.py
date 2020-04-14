@@ -22,6 +22,8 @@ class LoginPage(BasePage):
         """点击弹窗确认按钮方法"""
         self.click_func(self.find_element_func(page.confirm_btn))
 
+    # 注意: 如果想要在测试用例中少调用方法, 也可以考虑在封装完元素之后,
+    # 单独封装一个方法来组装所有元素, 形成一个测试方法
     def login_func(self, name, password):
         """登录方法"""
         self.input_user(name)  # 输入用户名
