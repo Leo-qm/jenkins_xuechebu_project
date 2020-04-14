@@ -34,13 +34,18 @@ class TestLogin(object):
         self.page_factory.mine_page().click_login()  # 点击登录/注册
         self.page_factory.login_page().login_func('13800001111', 'lm123456')  # 登录
 
-        # 截图
-        self.driver.get_screenshot_as_file('./screenshot/info.png')
-        # rb: 以二进制方式读取
-        with open('./screenshot/info.png', 'rb') as f:
-            # allure.MASTER_HELPER.attach('文件名称', 文件内容, 文件类型)
-            allure.MASTER_HELPER.attach('my_info', f.read(), allure.MASTER_HELPER.attach_type.PNG)
+        try:
+            # 断言
+            toast_msg = self.page_factory.login_page().get_login_toast('账号还未注册')
+            assert '账号还未注册' in toast_msg
 
-        # 断言
-        toast_msg = self.page_factory.login_page().get_login_toast('账号还未注册')
-        assert '账号还未注册' in toast_msg
+        except AssertionError as e:  # AssertionError: 为断言失败异常类型
+
+            # 给 allure 报告添加截图(断言失败时进行截图操作)
+            self.driver.get_screenshot_as_file('./screenshot/info.png')
+            # rb: 以二进制方式读取
+            with open('./screenshot/info.png', 'rb') as f:
+                # allure.MASTER_HELPER.attach('文件名称', 文件内容, 文件类型)
+                allure.MASTER_HELPER.attach('my_info', f.read(), allure.MASTER_HELPER.attach_type.PNG)
+
+            raise e  # 当截图操作完成后, 应该还原测试用例的真实结果, 因此需要再主动抛出异常
