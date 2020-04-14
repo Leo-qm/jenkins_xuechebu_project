@@ -1,6 +1,7 @@
 """
 登录测试用例
 """
+import allure
 import pytest
 
 from page.page_factory import PageFactory
@@ -32,6 +33,14 @@ class TestLogin(object):
         self.page_factory.index_page().click_mine()  # 点击我的
         self.page_factory.mine_page().click_login()  # 点击登录/注册
         self.page_factory.login_page().login_func('13800001111', 'lm123456')  # 登录
+
+        # 截图
+        self.driver.get_screenshot_as_file('./screenshot/info.png')
+        # rb: 以二进制方式读取
+        with open('./screenshot/info.png', 'rb') as f:
+            # allure.MASTER_HELPER.attach('文件名称', 文件内容, 文件类型)
+            allure.MASTER_HELPER.attach('my_info', f.read(), allure.MASTER_HELPER.attach_type.PNG)
+
         # 断言
         toast_msg = self.page_factory.login_page().get_login_toast('账号还未注册')
         assert '账号还未注册' in toast_msg
